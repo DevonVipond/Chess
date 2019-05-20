@@ -19,27 +19,28 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
+    //scene = new QGraphicsScene(this);
+    //ui->graphicsView->setScene(scene);
+    //scene->setSceneRect(0,0,800,800);
+    //setFixedSize(800,800);
 
     QWidget *myWidget = new QWidget(this);
-    myWidget->setGeometry(0,0,1370,700);
+    myWidget->setGeometry(0,0,800,800);
     myWidget->show();
-    //scene->setSceneRect(0,0,1400,900);
-    //setFixedSize(1400,900);
+    myWidget->focusWidget();
 
     auto chessBoard = ChessBoard::getInstance();
-    //vector<vector<char>> board = chessBoard->getBoardAsVector();
-    vector<vector<char>> board = {
-        {'P','P','P','P','P','P','P','P'},
-        {'p','p','p','p','p','p','p','p'},
-        {'p','p','p','p','p','p','p','p'},
-        {'p','p','p','p','p','p','p','p'},
-        {'p','p','p','p','p','p','p','p'},
-        {'p','p','p','p','p','p','p','p'},
-        {'p','p','p','p','p','p','p','p'},
-        {'p','p','p','p','p','p','p','p'}
-                                 };
+    vector<vector<char>> board = chessBoard->getBoardAsVector();
+    //``vector<vector<char>> board = {
+    //``    {'P','P','P','P','P','P','P','P'},
+    //``    {'p','p','p','p','p','p','p','p'},
+    //``    {'p','p','p','p','p','p','p','p'},
+    //``    {'p','p','p','p','p','p','p','p'},
+    //``    {'p','p','p','p','p','p','p','p'},
+    //``    {'p','p','p','p','p','p','p','p'},
+    //``    {'p','p','p','p','p','p','p','p'},
+    //``    {'p','p','p','p','p','p','p','p'}
+    //``                             };
     if(!drawBoard(myWidget, board))
     {
         std::cout << "unable to draw board";
@@ -57,6 +58,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    std::cout << "in mainWindow mousepressevent \n";
+    // Pass event down to the square
+    //int row = event->x();
+    //int row = event->();
+
+
+}
 
 bool MainWindow::drawBoard(QWidget *parent, std::vector<std::vector<char>> board)
 {
@@ -65,18 +75,18 @@ bool MainWindow::drawBoard(QWidget *parent, std::vector<std::vector<char>> board
     bool whiteTile = true;
 
     // Returns an unordered_map which maps each pieces icon to its image
-    //auto getImagePath = [&]()
-    //{
-    //    // black images
-    //    std::unordered_map<char, QString> iconToImagePath = {
-    //        {'p', "images/pawn.png"},
-    //        {'K', "images/knight.png"},
-    //        {'R', "images/rook.png"},
-    //        {'!', ""},
-    //    };
+    auto getImagePath = [&]()
+    {
+        // black images
+        std::unordered_map<char, QString> iconToImagePath = {
+            {'P', "pawn.png"},
+            {'K', "knight.png"},
+            {'R', "rook.png"},
+            {'!', ""},
+        };
 
-    //    return iconToImagePath;
-    //};
+        return iconToImagePath;
+    };
 
     int x = WINDOW_WIDTH/2 - 400;
     int y = 50;
@@ -87,27 +97,28 @@ bool MainWindow::drawBoard(QWidget *parent, std::vector<std::vector<char>> board
         {
             std::cout << "drawingSquare " << log++ << std::endl;
 
-            //char icon =  board[r][c];
-            //auto imageMap = getImagePath();
-            //auto  imagePath = imageMap.find(icon);
+            char icon =  board[r][c];
+            auto imageMap = getImagePath();
+            auto  imagePath = imageMap.find(icon);
 
-            //if(imagePath == imageMap.end())
-            //return false;
+            Square *square;
+            if(imagePath != imageMap.end())
+                square = new Square(parent, imagePath->second, true);
+            else
+                square = new Square(parent, "");
+
 
             // TODO: fix hella memory leak
-            Square *square = new Square(parent, "");//imagePath->second);
             collection[r][c] = square;
             square->xCord = r;
             square->yCord = c;
             square->setGeometry(r*shift, c*shift, 100, 100);
-            square->setPixmap(QPixmap(":/images/images/pawn.png"));
             if(whiteTile)
-                this->setStyleSheet("QLabel {background-color: rgb(120, 120, 90);}:hover{background-color: rgb(170,85,127);}");
+                square->setStyleSheet("QLabel {background-color: white;}:hover{background-color: blue;}");
             else
-                this->setStyleSheet("QLabel {background-color: rgb(211, 211, 158);}:hover{background-color: rgb(170,95,127);}");
+                square->setStyleSheet("QLabel {background-color: gray;}:hover{background-color: blue;}");
 
             whiteTile = !whiteTile;
-            //scene->addItem(square);
         }
 
         whiteTile = !whiteTile;

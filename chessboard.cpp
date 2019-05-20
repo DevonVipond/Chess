@@ -159,7 +159,6 @@ void ChessBoard::displayBoard() const
 // Returns the chessboard as a vector of chars
 std::vector<std::vector<char>> ChessBoard::getBoardAsVector() const
 {
-
     vector<std::vector<char>> ret;
     vector<char> emptyRow;
     for(int r = 0; r  < MAX_HEIGHT; r++)
@@ -174,6 +173,8 @@ std::vector<std::vector<char>> ChessBoard::getBoardAsVector() const
                 ret[r].push_back(NO_PIECE_ICON);
         }
     }
+
+    return ret;
 }
 
 const Piece* ChessBoard::getPiece(int x, int y) const

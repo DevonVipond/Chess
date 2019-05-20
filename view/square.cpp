@@ -1,32 +1,68 @@
 #include "square.h"
+#include "chessboard.h"
 
-Square::Square(QWidget *parent, QString imagePath) : QLabel(parent)
+#include "iostream"
+
+static const QString IMAGE_DIRECTORY_PATH = ":/images/images/";
+
+Square::Square(QWidget *parent, QString imagePath, bool hasPiece) : QLabel(parent)
 {
-    //setRect(0,0,100,100);
-    //brush.setStyle(Qt::SolidPattern);
     //setZValue(-1);
-
+    this->hasPiece = hasPiece;
     setImage(imagePath);
 }
 
 void Square::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    //TODO pass coor for src -> dest
+    std::cout << "in mousePressEvent\n";
+    auto board = ChessBoard::getInstance();
 
+    Coordinate firstSelectedSquare = board->getFirstSelectedPiece();
+    Coordinate selectedSquare(this->xCord, this->yCord);
+    if(firstSelectedSquare.isValid())
+    {
+        if(firstSelectedSquare == selectedSquare)
+        {
+            return;
+        }
+        else
+        {
+            if(board->movePiece(Player::WHITE, firstSelectedSquare, selectedSquare))
+            {
+                firstSelectedSquare.clear();
+            }
+            else
+            {
+                // TODO: IDK what to do here
+                // Prob make tile red
+            }
+        }
+    }
+
+    if(hasPiece)
+    {
+        std::cout << "resetting firstSelectedPiece\n";
+        board->setFirstSelectedPiece(selectedSquare);
+    }
 }
 
-void Square::setColor(QColor color)
+void Square::setColor()
 {
-    //brush.setColor(color);
-    //setBrush(color);
+
+    //if(column%8)
+    //    whiteTile = !whiteTile;
+    //else
+    //    column = -1;
+    //column++;
 }
 
 void Square::setImage(QString imagePath)
 {
-    //if (imagePath == "" || imagePath == "!")
-    //    return;
+    if (imagePath == "")
+        return;
 
-    this->setPixmap(QPixmap(":/images/pawn.png"));
+    // TODO: add error handling
+    this->setPixmap(QPixmap(IMAGE_DIRECTORY_PATH + imagePath));
     //image = new QLabel(this);
     ///** set content to show center in label */
     //image->setAlignment(Qt::AlignCenter);

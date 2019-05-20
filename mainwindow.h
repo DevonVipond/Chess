@@ -11,8 +11,6 @@
 #include "view/square.h"
 #include "coordinate.h"
 
-static Square *collection[8][8];
-
 namespace Ui {
 class MainWindow;
 }
@@ -27,11 +25,14 @@ public:
 
     bool drawBoard(QWidget *parent, std::vector<std::vector<char>> board);
 private:
+    void mousePressEvent(QMouseEvent *event);
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 
     int WINDOW_WIDTH = width();
     int TOP_LEFT_CORNER = 50;
+    Square *collection[8][8];
+
 };
 
 #endif // MAINWINDOW_H

@@ -7,6 +7,8 @@ static const int MAX_HEIGHT = 8;
 static const int MIN_WIDTH = 0;
 static const int MIN_HEIGHT = 0;
 
+static const int EMPTY_COORDINATE = -1;
+
 enum Player
 {
     BLACK,
@@ -16,26 +18,19 @@ enum Player
 
 class Coordinate{
 public:
-    Coordinate(int x, int y){
-        this->x = x;
-        this->y = y;
+    Coordinate(int x=EMPTY_COORDINATE, int y=EMPTY_COORDINATE);
 
-        if(x >= MIN_WIDTH && x < MAX_WIDTH && y >= MIN_HEIGHT && y < MAX_HEIGHT) {
-            this->valid = true;
-        }
-        else{
-            this->valid = false;
-        }
-    }
-    bool isValid() { return valid; }
-    int getX() { return x; }
-    int getY() { return y; }
+    bool setCoordinate(int x, int y);
+    bool isValid();
+    void clear();
 
+    int getX() const;
+    int getY() const;
+    Coordinate& operator=(const Coordinate &lhs);
 private:
-    bool validCoordinate(int x, int y){ }
-
-    // members
     bool valid = false;
-    int x=0, y=0;
+    int x, y;
 };
+
+bool operator==(const Coordinate &rhs, const Coordinate &lhs);
 #endif // COORDINATE_H

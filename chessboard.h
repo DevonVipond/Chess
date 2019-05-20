@@ -27,6 +27,9 @@ public:
     void displayBoard() const;
     std::vector<std::vector<char>> getBoardAsVector() const;
     const Piece* getPiece(int x, int y) const;
+
+    Coordinate getFirstSelectedPiece(){return firstSelectedPiece;}
+    void setFirstSelectedPiece(Coordinate c){this->firstSelectedPiece = c;}
 private:
     ChessBoard();
     ChessBoard(const ChessBoard& rhs) = delete;
@@ -36,5 +39,6 @@ private:
     std::vector<std::vector<Piece*>> board;
     std::vector<Piece*> capturedBlackPieces;
     std::vector<Piece*> capturedWhitePieces;
+    Coordinate firstSelectedPiece;
 };
 #endif // CHESSBOARD_H

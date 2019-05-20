@@ -37,19 +37,7 @@ SOURCES += \
     rook.cpp \
     bishop.cpp \
     view/square.cpp \
-    view/chessview.cpp \
-    view/chessview.cpp \
-    view/square.cpp \
-    bishop.cpp \
-    chessboard.cpp \
-    chessgame.cpp \
-    chessmoves.cpp \
-    coordinate.cpp \
-    knight.cpp \
-    mainwindow.cpp \
-    pawn.cpp \
-    piece.cpp \
-    rook.cpp
+    view/chessview.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -57,23 +45,12 @@ HEADERS += \
     chessgame.h \
     piece.h \
     pawn.h \
-    coordinate.h \
     chessmoves.h \
     knight.h \
-    rook.h \
-    bishop.h \
     view/square.h \
     view/chessview.h \
-    view/chessview.h \
-    view/square.h \
     bishop.h \
-    chessboard.h \
-    chessmoves.h \
     coordinate.h \
-    knight.h \
-    mainwindow.h \
-    pawn.h \
-    piece.h \
     rook.h
 
 FORMS += \
@@ -83,3 +60,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc
