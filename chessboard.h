@@ -3,14 +3,15 @@
 #include<vector>
 
 #include "coordinate.h"
-#include "piece.h"
 #include "pawn.h"
+#include "knight.h"
+#include "rook.h"
+#include "bishop.h"
 
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
 using namespace std;
-
 
 // Singleton
 class ChessBoard{
@@ -24,6 +25,8 @@ public:
     bool movePiece(Player p, Coordinate from, Coordinate to);
     bool capturePiece(Coordinate src, Coordinate dest);
     void displayBoard() const;
+    std::vector<std::vector<char>> getBoardAsVector() const;
+    const Piece* getPiece(int x, int y) const;
 private:
     ChessBoard();
     ChessBoard(const ChessBoard& rhs) = delete;

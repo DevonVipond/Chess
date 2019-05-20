@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 CONFIG += c++11
+CONFIG += console
 
 SOURCES += \
         mainwindow.cpp \
@@ -31,15 +32,26 @@ SOURCES += \
     piece.cpp \
     pawn.cpp \
     coordinate.cpp \
-    chessmoves.cpp
+    chessmoves.cpp \
+    knight.cpp \
+    rook.cpp \
+    bishop.cpp \
+    view/square.cpp \
+    view/chessview.cpp
 
 HEADERS += \
         mainwindow.h \
     chessboard.h \
+    chessgame.h \
     piece.h \
     pawn.h \
     coordinate.h \
-    chessmoves.h
+    chessmoves.h \
+    knight.h \
+    rook.h \
+    bishop.h \
+    view/square.h \
+    view/chessview.h
 
 FORMS += \
         mainwindow.ui

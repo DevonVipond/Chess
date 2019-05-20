@@ -27,8 +27,8 @@ public:
     virtual bool validMove(Coordinate src, Coordinate dest) = 0;
     virtual char display() const = 0;
 
-    static const char icon = 'P';
 protected:
+    char icon;
     Player player;
     bool moveDiagonal;
     int x;

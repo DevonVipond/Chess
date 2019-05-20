@@ -4,6 +4,8 @@
 
 #include "chessboard.h"
 
+static const char NO_PIECE_ICON = '!';
+
 ChessBoard::ChessBoard()
 {
     //std::vector<char> initBoard[8] = {'r', 'k', 'b', 'q', 'k', 'b', 'k', 'r'};
@@ -20,8 +22,17 @@ ChessBoard::ChessBoard()
     auto createBackline = [&](Player owner)
     {
         vector<Piece*> row;
-        for(int i = 0; i < MAX_WIDTH; i++)
-            row.push_back(new Pawn(owner));
+
+        row.push_back(new Rook(owner));
+        row.push_back(new Knight(owner));
+        row.push_back(new Bishop(owner));
+
+        row.push_back(new Pawn(owner));
+        row.push_back(new Pawn(owner));
+
+        row.push_back(new Bishop(owner));
+        row.push_back(new Knight(owner));
+        row.push_back(new Rook(owner));
 
         return row;
     };
@@ -39,11 +50,6 @@ ChessBoard::ChessBoard()
     board.push_back(createBackline(Player::WHITE));
 }
 
-//ChessBoard::~ChessBoard()
-//{
-//
-//}
-
 ChessBoard* ChessBoard::onlyInstance;
 
 ChessBoard* ChessBoard::getInstance()
@@ -59,12 +65,12 @@ ChessBoard* ChessBoard::getInstance()
 char ChessBoard::displayPiece(Coordinate location) const
 {
     if(!location.isValid())
-        return '!';
+        return NO_PIECE_ICON;
 
     if(board[location.getX()][location.getY()] != nullptr)
         return board[location.getX()][location.getY()]->display();
 
-    return '.';
+    return NO_PIECE_ICON;
 }
 
 // Assume the move is valid
@@ -148,4 +154,29 @@ void ChessBoard::displayBoard() const
         }
         std::cout << "\n";
     }
+}
+
+// Returns the chessboard as a vector of chars
+std::vector<std::vector<char>> ChessBoard::getBoardAsVector() const
+{
+
+    vector<std::vector<char>> ret;
+    vector<char> emptyRow;
+    for(int r = 0; r  < MAX_HEIGHT; r++)
+    {
+        ret.push_back(emptyRow);
+        for(int c = 0; c  < MAX_WIDTH; c++)
+        {
+            Piece* piece = board[r][c];
+            if (piece != nullptr)
+                ret[r].push_back(piece->display());
+            else
+                ret[r].push_back(NO_PIECE_ICON);
+        }
+    }
+}
+
+const Piece* ChessBoard::getPiece(int x, int y) const
+{
+    return board[x][y];
 }

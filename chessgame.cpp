@@ -7,36 +7,41 @@
 #include <fstream>
 
 #include "chessboard.h"
+
 using namespace std;
 
+MainWindow *view;
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    //w.show();
+    view = new MainWindow();
+    view->show();
 
-    auto chessBoard = ChessBoard::getInstance();
+   // chessBoard->displayBoard();
+   // cout << "\n";
 
-    chessBoard->displayBoard();
-    cout << "\n";
+   // while(1) {
+   //     cout << "\n";
+   //     int srcX, srcY, destX, destY;
+   //     cin >> srcX;
+   //     cin >> srcY;
+   //     cin >> destX;
+   //     cin >> destY;
+   //     if(chessBoard->movePiece(Player::BLACK, Coordinate(srcX,srcY), Coordinate(destX,destY)))
+   //     {
+   //         cout << "valid move\n";
+   //         chessBoard->displayBoard();
+   //     }
+   //     else
+   //     {
+   //         chessBoard->displayBoard();
+   //         cout << "invalid move\n";
+   //     }
 
-  //  while() {
-        int srcX, srcY, destX, destY;
-        srcX = 1;
-        srcY = 1;
-        destX = 2;
-        destY = 1;
-        if(chessBoard->movePiece(Player::BLACK, Coordinate(srcX,srcY), Coordinate(destX,destY)))
-        {
-            cout << "valid move";
-            chessBoard->displayBoard();
-        }
-        else
-            cout << "invalid move";
+   //     cout << "\n";
 
-        cout << "\n";
-        //return a.exec();
+        return a.exec();
    // }
 }
 
