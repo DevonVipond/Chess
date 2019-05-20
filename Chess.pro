@@ -26,7 +26,7 @@ CONFIG += c++11
 CONFIG += console
 
 SOURCES += \
-        mainwindow.cpp \
+    mainwindow.cpp \
     chessboard.cpp \
     chessgame.cpp \
     piece.cpp \
@@ -37,10 +37,22 @@ SOURCES += \
     rook.cpp \
     bishop.cpp \
     view/square.cpp \
-    view/chessview.cpp
+    view/chessview.cpp \
+    view/chessview.cpp \
+    view/square.cpp \
+    bishop.cpp \
+    chessboard.cpp \
+    chessgame.cpp \
+    chessmoves.cpp \
+    coordinate.cpp \
+    knight.cpp \
+    mainwindow.cpp \
+    pawn.cpp \
+    piece.cpp \
+    rook.cpp
 
 HEADERS += \
-        mainwindow.h \
+    mainwindow.h \
     chessboard.h \
     chessgame.h \
     piece.h \
@@ -51,7 +63,18 @@ HEADERS += \
     rook.h \
     bishop.h \
     view/square.h \
-    view/chessview.h
+    view/chessview.h \
+    view/chessview.h \
+    view/square.h \
+    bishop.h \
+    chessboard.h \
+    chessmoves.h \
+    coordinate.h \
+    knight.h \
+    mainwindow.h \
+    pawn.h \
+    piece.h \
+    rook.h
 
 FORMS += \
         mainwindow.ui
@@ -60,4 +83,3 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-

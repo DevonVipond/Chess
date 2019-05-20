@@ -11,13 +11,14 @@
 #include "piece.h"
 
 
-class Square : public QGraphicsRectItem
+class Square : public QLabel
 {
 public:
 
     //Constructor
-    Square(QGraphicsItem *parent=nullptr):QGraphicsRectItem(parent) {}
-    Square(QGraphicsItem *parent=nullptr, QString imagePath="");
+    Square(QWidget *parent=nullptr):QLabel(parent) {}
+//Square::Square(QLabel *parent, QString imagePath) : QLabel(parent)
+    Square(QWidget *parent=nullptr, QString imagePath="");
     ~Square() override {}
 
     //public member function

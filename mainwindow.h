@@ -25,7 +25,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    bool drawBoard(std::vector<std::vector<char>> board);
+    bool drawBoard(QWidget *parent, std::vector<std::vector<char>> board);
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
