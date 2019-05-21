@@ -120,7 +120,6 @@ bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
 
     Piece* srcPiece = board[src.getX()][src.getY()];
 
-    // TODO: Currently no support for eliminating pieces
     if(srcPiece ==  nullptr || (board[dest.getX()][dest.getY()] != nullptr &&
                                 board[dest.getX()][dest.getY()]->getPlayer() == p))
     {
@@ -138,8 +137,11 @@ bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
             board[dest.getX()][dest.getY()] = srcPiece;
             board[src.getX()][src.getY()] = nullptr;
         }
+
+        //displayBoard();
     }
     std::cout << "end of movePiece \n";
+
 
     return validMove;
 }
@@ -166,12 +168,15 @@ std::vector<std::vector<char>> ChessBoard::getBoardAsVector() const
         ret.push_back(emptyRow);
         for(int c = 0; c  < MAX_WIDTH; c++)
         {
-            Piece* piece = board[r][c];
-            if (piece != nullptr)
-                ret[r].push_back(piece->display());
-            else
-                ret[r].push_back(NO_PIECE_ICON);
+            ret[r].push_back(getInstance()->displayPiece(Coordinate(r, c)));
         }
+    }
+
+    for(int r = 0; r < 8; r++){
+        for(int c = 0; c < 8; c++){
+            std::cout << ret[r][c];
+        }
+        std::cout << "\n";
     }
 
     return ret;

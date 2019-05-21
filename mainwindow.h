@@ -7,6 +7,7 @@
 #include <QDialog>
 #include <QtCore>
 #include <QtGui>
+#include <QWidget>
 
 #include "view/square.h"
 #include "coordinate.h"
@@ -23,9 +24,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    bool drawBoard(QWidget *parent, std::vector<std::vector<char>> board);
+    QWidget *window;
+
+signals:
+    void updateDisplay();
+public slots:
+    bool drawBoard();
 private:
-    void mousePressEvent(QMouseEvent *event);
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 

@@ -3,11 +3,12 @@
 #ifndef CHESSBOX_H
 #define CHESSBOX_H
 
-#include <QGraphicsRectItem>
-#include <QBrush>
+//#include <QGraphicsRectItem>
+//#include <QBrush>
 #include <QGraphicsSceneMouseEvent>
 #include <QLabel>
 #include <QString>
+//#include <QPushButton>
 
 #include "piece.h"
 
@@ -15,18 +16,18 @@ static Coordinate firstSelectedSquare();
 
 class Square : public QLabel
 {
+    Q_OBJECT
+signals:
+    void updateDisplay();
 public:
-
-    //Constructor
-    Square(QWidget *parent=nullptr):QLabel(parent) {}
-//Square::Square(QLabel *parent, QString imagePath) : QLabel(parent)
-    Square(QWidget *parent=nullptr, QString imagePath="", bool hasPiece=false);
+     Square(QWidget *parent=nullptr):QLabel(parent) {}
+     Square(QWidget *parent=nullptr, QString imagePath="", bool hasPiece=false);
     ~Square() override {}
 
-    //public member function
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseButtonPressEvent(QGraphicsSceneMouseEvent *event);
     void setColor();
     void setImage(QString imagePath);
+    bool event(QEvent *e);
 
     int xCord;
     int yCord;

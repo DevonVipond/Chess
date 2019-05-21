@@ -1,29 +1,58 @@
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QPixmap>
-#include <QString>
-#include <unordered_map>
+#include <QApplication>
+#include <string>
+#include <vector>
+#include <stdio.h>
 #include <iostream>
+#include <fstream>
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "chesscontroller.h"
 #include "chessboard.h"
+
+using namespace std;
+
+//MainWindow *view;
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    //`view = new ChessGame();
+    //`view->show();
+
+   // chessBoard->displayBoard();
+   // cout << "\n";
+
+   // while(1) {
+   //     cout << "\n";
+   //     int srcX, srcY, destX, destY;
+   //     cin >> srcX;
+   //     cin >> srcY;
+   //     cin >> destX;
+   //     cin >> destY;
+   //     if(chessBoard->movePiece(Player::BLACK, Coordinate(srcX,srcY), Coordinate(destX,destY)))
+   //     {
+   //         cout << "valid move\n";
+   //         chessBoard->displayBoard();
+   //     }
+   //     else
+   //     {
+   //         chessBoard->displayBoard();
+   //         cout << "invalid move\n";
+   //     }
+
+   //     cout << "\n";
+
+        return a.exec();
+   // }
+}
+
+
 
 static const char NO_PIECE_ICON = '!';
 
 //inline void log(std::string s){ std::cout << s << std::endl;}
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+ChessGame::ChessGame(QWidget *parent) :
 {
-    ui->setupUi(this);
-
-    scene = new QGraphicsScene(this);
-    ui->graphicsView->setScene(scene);
-    scene->setSceneRect(0,0,800,800);
-    setFixedSize(800,800);
-
     QWidget *myWidget = new QWidget(this);
     myWidget->setGeometry(0,0,800,800);
     myWidget->show();
@@ -53,12 +82,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
-void MainWindow::mousePressEvent(QMouseEvent *event)
+void ChessGame::mousePressEvent(QMouseEvent *event)
 {
     std::cout << "in mainWindow mousepressevent \n";
     // Pass event down to the square
@@ -68,7 +93,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
 }
 
-bool MainWindow::drawBoard(QWidget *parent, std::vector<std::vector<char>> board)
+bool ChessGame::drawBoard(QWidget *parent, std::vector<std::vector<char>> board)
 {
     static int log = 0;
     int shift = 100;
