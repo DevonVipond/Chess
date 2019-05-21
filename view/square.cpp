@@ -3,13 +3,17 @@
 
 #include "iostream"
 
-static const QString IMAGE_DIRECTORY_PATH = ":/images/images/";
-
-Square::Square(QWidget *parent, QString imagePath, bool hasPiece) : QLabel (parent)
+Square::Square(QWidget *parent, QString imagePath, bool hasPiece, Player player) : QLabel (parent)
 {
     //setZValue(-1);
     this->hasPiece = hasPiece;
     setImage(imagePath);
+}
+
+Square::~Square()
+{
+
+
 }
 
 bool Square::event(QEvent *event)
@@ -17,8 +21,6 @@ bool Square::event(QEvent *event)
     static int counter=0;
     if (event->type() == QEvent::MouseButtonPress)
     {
-
-        std::cout << "in mousebuttonpress event" << counter++ << endl;
         auto board = ChessBoard::getInstance();
 
         Coordinate firstSelectedSquare = board->getFirstSelectedPiece();
@@ -35,6 +37,7 @@ bool Square::event(QEvent *event)
                 {
                     std::cout << "moving piece\n";
                     firstSelectedSquare.clear();
+                    board->setFirstSelectedPiece(firstSelectedSquare);
 
                     emit updateDisplay();
                 }
@@ -55,7 +58,13 @@ bool Square::event(QEvent *event)
         }
     }
 
-       return QWidget::event(event);
+    return QWidget::event(event);
+}
+
+void Square::update(QString imagePath, bool hasPiece)
+{
+    this->hasPiece = hasPiece;
+    setImage(imagePath);
 }
 
 void Square::mouseButtonPressEvent(QGraphicsSceneMouseEvent *event)
@@ -70,9 +79,9 @@ void Square::setColor()
 void Square::setImage(QString imagePath)
 {
     if (imagePath == "")
-        return;
+        this->setPixmap(QPixmap());
 
-        this->setPixmap(IMAGE_DIRECTORY_PATH + imagePath);
+        this->setPixmap(QPixmap(IMAGE_DIRECTORY_PATH + imagePath));
     //QPixmap pixmap;
     //if(pixmap.load(IMAGE_DIRECTORY_PATH + imagePath))
     //{

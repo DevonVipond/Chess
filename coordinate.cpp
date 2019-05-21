@@ -21,6 +21,8 @@ bool Coordinate::isValid()
 void Coordinate::clear() {
     x = EMPTY_COORDINATE;
     y = EMPTY_COORDINATE;
+
+    valid = false;
 }
 
 bool Coordinate::setCoordinate(int x, int y)

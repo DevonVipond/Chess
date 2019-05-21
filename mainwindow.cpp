@@ -9,7 +9,6 @@
 #include "ui_mainwindow.h"
 #include "chessboard.h"
 
-static const char NO_PIECE_ICON = '!';
 
 //inline void log(std::string s){ std::cout << s << std::endl;}
 
@@ -20,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     window = new QWidget(this);
-    window->setGeometry(0,0,800,800);
+    window->setGeometry(0,0,900,800);
     window->show();
     window->focusWidget();
 
@@ -32,6 +31,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// TODO: refactor
 bool MainWindow::drawBoard()
 {
     static int log = 0;
@@ -48,7 +48,7 @@ bool MainWindow::drawBoard()
         // black images
         std::unordered_map<char, QString> iconToImagePath = {
             {'P', "pawn.png"},
-            {'K', "knight.png"},
+            {'K', "horse.png"},
             {'R', "rook.png"},
             {'!', ""},
         };
@@ -68,27 +68,38 @@ bool MainWindow::drawBoard()
             auto imageMap = getImagePath();
             auto imagePath = imageMap.find(icon);
 
-            Square *square;
-            if(imagePath != imageMap.end())
-                square = new Square(window, imagePath->second, true);
+            // if not create: create
+            // else call update
+            if(collection[r][c] == nullptr)
+            {
+                Square *square;
+                if(imagePath != imageMap.end())
+                    square = new Square(window, imagePath->second, true);
+                else
+                    square = new Square(window, "");
+
+                collection[r][c] = square;
+                square->xCord = r;
+                square->yCord = c;
+                square->setGeometry(r*shift, c*shift, 100, 100);
+
+                if(whiteTile)
+                    square->setStyleSheet("QLabel {background-color: white;}:hover{background-color: blue;}");
+                else
+                    square->setStyleSheet("QLabel {background-color: gray;}:hover{background-color: blue;}");
+
+                connect(square, SIGNAL(updateDisplay()), this, SLOT(drawBoard()));
+            }
             else
-                square = new Square(window, "");
+            {
+                if(imagePath != imageMap.end())
+                    collection[r][c]->update(imagePath->second, true);
+                else
+                    collection[r][c]->update("", false);
+            }
 
             // TODO: fix hella memory leak
-            if(collection[r][c] != nullptr)
-                delete collection[r][c];
 
-            collection[r][c] = square;
-            square->xCord = r;
-            square->yCord = c;
-            square->setGeometry(r*shift, c*shift, 100, 100);
-
-            if(whiteTile)
-                square->setStyleSheet("QLabel {background-color: white;}:hover{background-color: blue;}");
-            else
-                square->setStyleSheet("QLabel {background-color: gray;}:hover{background-color: blue;}");
-
-            connect(square, SIGNAL(updateDisplay()), this, SLOT(drawBoard()));
 
             whiteTile = !whiteTile;
         }

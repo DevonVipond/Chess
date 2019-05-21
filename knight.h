@@ -11,7 +11,6 @@ public:
 
     bool validMove(Coordinate src, Coordinate dest) override;
     char display() const override;
-
 };
 
 #endif // KNIGHT_H

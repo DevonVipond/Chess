@@ -51,7 +51,8 @@ HEADERS += \
     view/chessview.h \
     bishop.h \
     coordinate.h \
-    rook.h
+    rook.h \
+    translations.h
 
 FORMS += \
         mainwindow.ui

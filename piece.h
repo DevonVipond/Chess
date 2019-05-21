@@ -25,7 +25,10 @@ public:
 
     Player getPlayer(){ return player; }
     virtual bool validMove(Coordinate src, Coordinate dest) = 0;
-    virtual char display() const = 0;
+    char display()
+    {
+        return getPlayerAsChar(player) + icon;
+    }
 
 protected:
     char icon;

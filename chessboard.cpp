@@ -4,8 +4,6 @@
 
 #include "chessboard.h"
 
-static const char NO_PIECE_ICON = '!';
-
 ChessBoard::ChessBoard()
 {
     //std::vector<char> initBoard[8] = {'r', 'k', 'b', 'q', 'k', 'b', 'k', 'r'};

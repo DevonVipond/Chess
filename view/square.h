@@ -21,20 +21,20 @@ signals:
     void updateDisplay();
 public:
      Square(QWidget *parent=nullptr):QLabel(parent) {}
-     Square(QWidget *parent=nullptr, QString imagePath="", bool hasPiece=false);
-    ~Square() override {}
+     Square(QWidget *parent=nullptr, QString imagePath="", bool hasPiece=false,
+            Player player=Player::UNKNOWN);
+    ~Square() override;
 
     void mouseButtonPressEvent(QGraphicsSceneMouseEvent *event);
     void setColor();
     void setImage(QString imagePath);
     bool event(QEvent *e);
+    void update(QString imagePath, bool hasPiece);
 
     int xCord;
     int yCord;
 private:
+    Player player;
     bool hasPiece;
-    char pieceIcon;
-    QBrush brush;
-    QLabel* image;
 };
 #endif

@@ -1,20 +1,7 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
-// TODO put in Dimensions namespace
-static const int MAX_WIDTH = 8;
-static const int MAX_HEIGHT = 8;
-static const int MIN_WIDTH = 0;
-static const int MIN_HEIGHT = 0;
-
-static const int EMPTY_COORDINATE = -1;
-
-enum Player
-{
-    BLACK,
-    WHITE,
-    UNKNOWN
-};
+#include "translations.h"
 
 class Coordinate{
 public:

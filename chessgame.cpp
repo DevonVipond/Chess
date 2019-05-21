@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     view = new MainWindow();
+    view->setGeometry(0,0,800,800);
     view->show();
-
 
 
     return a.exec();
