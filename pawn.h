@@ -12,7 +12,7 @@ public:
     ~Pawn() override {}
 
     bool validMove(Coordinate src, Coordinate dest) override;
-    char display() const override;
+    std::string getName() override{return player == Player::WHITE ? "WHITE_PAWN" : "BLACK_PAWN";}
 };
 
 #endif // PAWN_H

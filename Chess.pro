@@ -37,7 +37,8 @@ SOURCES += \
     rook.cpp \
     bishop.cpp \
     view/square.cpp \
-    view/chessview.cpp
+    view/chessview.cpp \
+    movevalidator.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -52,7 +53,8 @@ HEADERS += \
     bishop.h \
     coordinate.h \
     rook.h \
-    translations.h
+    translations.h \
+    movevalidator.h
 
 FORMS += \
         mainwindow.ui

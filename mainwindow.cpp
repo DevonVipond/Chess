@@ -2,12 +2,12 @@
 #include <QGraphicsScene>
 #include <QPixmap>
 #include <QString>
-#include <unordered_map>
 #include <iostream>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "chessboard.h"
+#include "translations.h"
 
 
 //inline void log(std::string s){ std::cout << s << std::endl;}
@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     window->show();
     window->focusWidget();
 
-    drawBoard();
+    drawBoard(false);
 }
 
 MainWindow::~MainWindow()
@@ -32,75 +32,62 @@ MainWindow::~MainWindow()
 }
 
 // TODO: refactor
-bool MainWindow::drawBoard()
+bool MainWindow::drawBoard(bool update)
 {
     static int log = 0;
     std::cout << "drawingSquare " << log++ << std::endl;
-    int shift = 100;
     bool whiteTile = true;
 
     auto chessBoard = ChessBoard::getInstance();
-    vector<vector<char>> board = chessBoard->getBoardAsVector();
-
-    // Returns an unordered_map which maps each pieces icon to its image
-    auto getImagePath = [&]()
-    {
-        // black images
-        std::unordered_map<char, QString> iconToImagePath = {
-            {'P', "pawn.png"},
-            {'K', "horse.png"},
-            {'R', "rook.png"},
-            {'!', ""},
-        };
-
-        return iconToImagePath;
-    };
 
     int x = WINDOW_WIDTH/2 - 400;
     int y = 50;
 
-    for(int c = 0; c < board.size(); c++)
+    auto createSquare = [=, &whiteTile](bool update, QString imagePath, Player player, int r=0, int c=0)
     {
-        for(int r = 0; r < board[0].size(); r++)
+        if(!update)
+        {
+            int shift = 100;
+            Square *square;
+            Coordinate coordinate(r,c);
+            square = new Square(window, imagePath, player==Player::UNKNOWN?false:true, player, coordinate);
+            square->setGeometry(r*shift, c*shift, 100, 100);
+
+            collection[r][c] = square;
+
+            if(whiteTile)
+                square->setStyleSheet(WHITE_SQUARE_STYLE);
+            else
+                square->setStyleSheet(BLACK_SQUARE_STYLE);
+
+            connect(square, SIGNAL(updateDisplay()), this, SLOT(drawBoard()));
+        }
+        else
+        {
+            std::cout << "updating boad\n";
+            collection[r][c]->update(imagePath, player==Player::UNKNOWN?false:true, player);
+        }
+    };
+
+    for(int c = 0; c < MAX_HEIGHT; c++)
+    {
+        for(int r = 0; r < MAX_WIDTH; r++)
         {
 
-            char icon =  board[r][c];
-            auto imageMap = getImagePath();
-            auto imagePath = imageMap.find(icon);
-
-            // if not create: create
-            // else call update
-            if(collection[r][c] == nullptr)
+            // Check if a piece exists at this location
+            if(chessBoard->getPiece(r,c) != nullptr)
             {
-                Square *square;
-                if(imagePath != imageMap.end())
-                    square = new Square(window, imagePath->second, true);
-                else
-                    square = new Square(window, "");
+                std::string name = chessBoard->getPiece(r,c)->getName();
+                Player player = chessBoard->getPiece(r,c)->getPlayer();
 
-                collection[r][c] = square;
-                square->xCord = r;
-                square->yCord = c;
-                square->setGeometry(r*shift, c*shift, 100, 100);
-
-                if(whiteTile)
-                    square->setStyleSheet("QLabel {background-color: white;}:hover{background-color: blue;}");
-                else
-                    square->setStyleSheet("QLabel {background-color: gray;}:hover{background-color: blue;}");
-
-                connect(square, SIGNAL(updateDisplay()), this, SLOT(drawBoard()));
+                createSquare(update, QString::fromStdString(name), player, r, c);
             }
-            else
+           else
             {
-                if(imagePath != imageMap.end())
-                    collection[r][c]->update(imagePath->second, true);
-                else
-                    collection[r][c]->update("", false);
+                createSquare(update, QString(NO_PIECE_ICON), Player::UNKNOWN, r, c);
             }
 
             // TODO: fix hella memory leak
-
-
             whiteTile = !whiteTile;
         }
 

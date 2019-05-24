@@ -29,7 +29,7 @@ public:
 signals:
     void updateDisplay();
 public slots:
-    bool drawBoard();
+    bool drawBoard(bool update=true);
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;

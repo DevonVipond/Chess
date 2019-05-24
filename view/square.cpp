@@ -2,18 +2,18 @@
 #include "chessboard.h"
 
 #include "iostream"
+#include <unordered_map>
 
-Square::Square(QWidget *parent, QString imagePath, bool hasPiece, Player player) : QLabel (parent)
+Square::Square(QWidget *parent, QString imagePath, bool hasPiece, Player player, Coordinate coordinate) : QLabel (parent)
 {
-    //setZValue(-1);
     this->hasPiece = hasPiece;
+    this->player = player;
+    this->location = coordinate;
     setImage(imagePath);
 }
 
 Square::~Square()
 {
-
-
 }
 
 bool Square::event(QEvent *event)
@@ -24,7 +24,7 @@ bool Square::event(QEvent *event)
         auto board = ChessBoard::getInstance();
 
         Coordinate firstSelectedSquare = board->getFirstSelectedPiece();
-        Coordinate selectedSquare(this->xCord, this->yCord);
+        Coordinate selectedSquare(this->location.getX(), this->location.getY());
         if(firstSelectedSquare.isValid())
         {
             if(firstSelectedSquare == selectedSquare)
@@ -33,7 +33,7 @@ bool Square::event(QEvent *event)
             }
             else
             {
-                if(board->movePiece(Player::WHITE, firstSelectedSquare, selectedSquare))
+                if(board->movePiece(this->player, firstSelectedSquare, selectedSquare))
                 {
                     std::cout << "moving piece\n";
                     firstSelectedSquare.clear();
@@ -61,7 +61,7 @@ bool Square::event(QEvent *event)
     return QWidget::event(event);
 }
 
-void Square::update(QString imagePath, bool hasPiece)
+void Square::update(QString imagePath, bool hasPiece, Player player)
 {
     this->hasPiece = hasPiece;
     setImage(imagePath);
@@ -78,10 +78,32 @@ void Square::setColor()
 
 void Square::setImage(QString imagePath)
 {
-    if (imagePath == "")
+    QString imageTranslation;
+
+    if(imagePath ==  "WHITE_PAWN")
+        imageTranslation = WHITE_PAWN;
+    else if(imagePath == "WHITE_KNIGHT")
+        imageTranslation = WHITE_KNIGHT;
+    else if (imagePath ==  "WHITE_ROOK")
+        imageTranslation = WHITE_ROOK;
+    else if(imagePath == "WHITE_KING")
+        imageTranslation = WHITE_KING;
+    else if(imagePath == "WHITE_QUEEN")
+        imageTranslation = WHITE_QUEEN;
+    else if(imagePath == "BLACK_PAWN")
+        imageTranslation = BLACK_PAWN;
+    else if(imagePath == "BLACK_KNIGHT")
+        imageTranslation = BLACK_KNIGHT;
+    else if(imagePath == "BLACK_ROOK")
+        imageTranslation = BLACK_ROOK;
+    else if (imagePath  == "BLACK_KING")
+        imageTranslation = BLACK_KING;
+    else if (imagePath ==  "BLACK_QUEEN")
+        imageTranslation = BLACK_QUEEN;
+    else
         this->setPixmap(QPixmap());
 
-        this->setPixmap(QPixmap(IMAGE_DIRECTORY_PATH + imagePath));
+    this->setPixmap(QPixmap(imageTranslation));
     //QPixmap pixmap;
     //if(pixmap.load(IMAGE_DIRECTORY_PATH + imagePath))
     //{

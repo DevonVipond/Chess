@@ -13,32 +13,40 @@
 
 using namespace std;
 
-// Singleton
+/**
+ * The Singleton ChessBoard is used to store the location of all chess pieces on the board
+*/
+
 class ChessBoard{
 public:
     ~ChessBoard();
 
-    char displayPiece(Coordinate location) const;
-
-    // Singleton
+    /*
+     * Returns pointer to Singleton
+    */
     static ChessBoard* getInstance();
-    bool movePiece(Player p, Coordinate from, Coordinate to);
-    bool capturePiece(Coordinate src, Coordinate dest);
-    void displayBoard() const;
-    std::vector<std::vector<char>> getBoardAsVector() const;
-    const Piece* getPiece(int x, int y) const;
 
-    Coordinate getFirstSelectedPiece(){return firstSelectedPiece;}
+    // TODO: remove, only used for debugging
+    //void displayBoard() const;
+    Piece* getPiece(int x, int y);
+
+    // TODO move out
     void setFirstSelectedPiece(Coordinate c){this->firstSelectedPiece = c;}
+    Coordinate getFirstSelectedPiece(){return firstSelectedPiece;}
+
+    bool movePiece(Player p, Coordinate src, Coordinate dest);
+
 private:
     ChessBoard();
     ChessBoard(const ChessBoard& rhs) = delete;
 
-    // TODO: add removedPieces
     static ChessBoard* onlyInstance;
     std::vector<std::vector<Piece*>> board;
+
     std::vector<Piece*> capturedBlackPieces;
     std::vector<Piece*> capturedWhitePieces;
+
+    // TODO move into view/controller
     Coordinate firstSelectedPiece;
 };
 #endif // CHESSBOARD_H

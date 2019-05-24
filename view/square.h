@@ -11,6 +11,7 @@
 //#include <QPushButton>
 
 #include "piece.h"
+#include "coordinate.h"
 
 static Coordinate firstSelectedSquare();
 
@@ -22,17 +23,16 @@ signals:
 public:
      Square(QWidget *parent=nullptr):QLabel(parent) {}
      Square(QWidget *parent=nullptr, QString imagePath="", bool hasPiece=false,
-            Player player=Player::UNKNOWN);
+            Player player=Player::UNKNOWN, Coordinate coordinate=NULL);
     ~Square() override;
 
     void mouseButtonPressEvent(QGraphicsSceneMouseEvent *event);
     void setColor();
     void setImage(QString imagePath);
     bool event(QEvent *e);
-    void update(QString imagePath, bool hasPiece);
+    void update(QString imagePath, bool hasPiece, Player player);
 
-    int xCord;
-    int yCord;
+    Coordinate location;
 private:
     Player player;
     bool hasPiece;

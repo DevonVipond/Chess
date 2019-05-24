@@ -10,7 +10,7 @@ public:
     ~Knight() override {}
 
     bool validMove(Coordinate src, Coordinate dest) override;
-    char display() const override;
+    std::string getName() override {return player == Player::WHITE ? "WHITE_KNIGHT" : "BLACK_KNIGHT";}
 };
 
 #endif // KNIGHT_H

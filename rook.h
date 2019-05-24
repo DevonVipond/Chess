@@ -10,8 +10,8 @@ public:
     ~Rook() override {}
 
     bool validMove(Coordinate src, Coordinate dest) override;
-    char display() const override;
 
+    std::string getName() override {return player == Player::WHITE ? "WHITE_ROOK" : "BLACK_ROOK";}
 };
 
 #endif // ROOK_H

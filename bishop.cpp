@@ -13,8 +13,3 @@ bool Bishop::validMove(Coordinate src, Coordinate dest)
 {
     return move->validMove(src, dest, 8, 8);
 }
-
-char Bishop::display() const
-{
-    return icon;
-}

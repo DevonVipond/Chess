@@ -10,9 +10,8 @@ public:
     ~Bishop() override {}
 
     bool validMove(Coordinate src, Coordinate dest) override;
-    char display() const override;
 
-    static const char icon = 'B';
+    std::string getName() override {return player == Player::WHITE ? "WHITE_BISHOP" : "BLACK_BISHOP";}
 };
 
 #endif // BISHOP_H

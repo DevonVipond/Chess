@@ -30,6 +30,9 @@ static const int MIN_HEIGHT = 0;
 // Empty Coordinate value
 static const int EMPTY_COORDINATE = -1;
 
+static const QString WHITE_SQUARE_STYLE = "QLabel {background-color: white;}:hover{background-color: blue;}";
+static const QString BLACK_SQUARE_STYLE = "QLabel {background-color: gray;}:hover{background-color: blue;}";
+
 enum Player
 {
     BLACK,
@@ -37,17 +40,5 @@ enum Player
     UNKNOWN
 };
 
-char getPlayerAsChar(Player player)
-{
-    switch(player)
-    {
-        case Player::BLACK:
-            return 'B';
-        case Player::WHITE:
-            return 'W';
-        default:
-            return 'U';
-    };
-}
 
 #endif // TRANSLATIONS_H

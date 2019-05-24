@@ -19,20 +19,19 @@
 
 class Piece {
 public:
-    Piece() //: player(Player::UNKNOWN), moveDiagonal(false), x(0), y(0)
-    {}
+    Piece(){}
     virtual  ~Piece(){}
 
-    Player getPlayer(){ return player; }
     virtual bool validMove(Coordinate src, Coordinate dest) = 0;
-    char display()
+
+    virtual std::string getName() = 0;
+    Player getPlayer()
     {
-        return getPlayerAsChar(player) + icon;
+        return player;
     }
 
 protected:
-    char icon;
-    Player player;
+    Player player=Player::UNKNOWN;
     bool moveDiagonal;
     int x;
     int y;

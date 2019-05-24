@@ -3,7 +3,6 @@
 
 Pawn::Pawn(Player p) : Piece()
 {
-    icon = 'P';
     player = p;
     moveDiagonal = false;
     x = 1;
@@ -14,9 +13,4 @@ Pawn::Pawn(Player p) : Piece()
 bool Pawn::validMove(Coordinate src, Coordinate dest)
 {
     return move->validMove(src, dest, 1, 1);
-}
-
-char Pawn::display() const
-{
-    return icon;
 }
