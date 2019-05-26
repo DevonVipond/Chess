@@ -8,10 +8,11 @@
 
 #include "chessboard.h"
 
-using namespace std;
-
 MainWindow *view;
 
+/*
+  This function sets mainwindow.cpp/h as the view
+*/
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

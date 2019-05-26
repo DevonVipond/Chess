@@ -84,6 +84,8 @@ void Square::setImage(QString imagePath)
         imageTranslation = WHITE_PAWN;
     else if(imagePath == "WHITE_KNIGHT")
         imageTranslation = WHITE_KNIGHT;
+    else if(imagePath == "WHITE_BISHOP")
+        imageTranslation = WHITE_BISHOP;
     else if (imagePath ==  "WHITE_ROOK")
         imageTranslation = WHITE_ROOK;
     else if(imagePath == "WHITE_KING")
@@ -94,6 +96,8 @@ void Square::setImage(QString imagePath)
         imageTranslation = BLACK_PAWN;
     else if(imagePath == "BLACK_KNIGHT")
         imageTranslation = BLACK_KNIGHT;
+    else if(imagePath == "BLACK_BISHOP")
+        imageTranslation = BLACK_BISHOP;
     else if(imagePath == "BLACK_ROOK")
         imageTranslation = BLACK_ROOK;
     else if (imagePath  == "BLACK_KING")

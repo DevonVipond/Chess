@@ -3,9 +3,6 @@
 #ifndef PIECEH_H
 #define PIECEH_H
 
-// TODO Consider removing player so piece does not need to know
-// about other layers
-
 /*
  * Base class for all chess pieces
  *
@@ -23,16 +20,20 @@ public:
     virtual  ~Piece(){}
 
     virtual bool validMove(Coordinate src, Coordinate dest) = 0;
-
+    Player getPlayer();
     virtual std::string getName() = 0;
-    Player getPlayer()
-    {
-        return player;
-    }
+
+    /*
+     * inDanger, inCheck and canBeCaptured are used for special handling of the King
+    */
+    bool inDanger(Coordinate location);
+    bool inCheck(Coordinate location);
+    bool canBeCaptured();
 
 protected:
     Player player=Player::UNKNOWN;
     bool moveDiagonal;
+    bool beCaptured=true;
     int x;
     int y;
 

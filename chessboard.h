@@ -7,11 +7,11 @@
 #include "knight.h"
 #include "rook.h"
 #include "bishop.h"
+#include "king.h"
+#include "queen.h"
 
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
-
-using namespace std;
 
 /**
  * The Singleton ChessBoard is used to store the location of all chess pieces on the board
@@ -26,8 +26,9 @@ public:
     */
     static ChessBoard* getInstance();
 
-    // TODO: remove, only used for debugging
-    //void displayBoard() const;
+    // TODO : Destructor
+    //~ChessBoard();
+
     Piece* getPiece(int x, int y);
 
     // TODO move out
@@ -42,9 +43,6 @@ private:
 
     static ChessBoard* onlyInstance;
     std::vector<std::vector<Piece*>> board;
-
-    std::vector<Piece*> capturedBlackPieces;
-    std::vector<Piece*> capturedWhitePieces;
 
     // TODO move into view/controller
     Coordinate firstSelectedPiece;

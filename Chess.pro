@@ -28,7 +28,6 @@ CONFIG += console
 SOURCES += \
     mainwindow.cpp \
     chessboard.cpp \
-    chessgame.cpp \
     piece.cpp \
     pawn.cpp \
     coordinate.cpp \
@@ -38,7 +37,11 @@ SOURCES += \
     bishop.cpp \
     view/square.cpp \
     view/chessview.cpp \
-    movevalidator.cpp
+    movevalidator.cpp \
+    gamestate.cpp \
+    main.cpp \
+    king.cpp \
+    queen.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -54,7 +57,10 @@ HEADERS += \
     coordinate.h \
     rook.h \
     translations.h \
-    movevalidator.h
+    movevalidator.h \
+    gamestate.h \
+    king.h \
+    queen.h
 
 FORMS += \
         mainwindow.ui

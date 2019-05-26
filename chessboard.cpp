@@ -3,10 +3,11 @@
 #include <fstream>
 
 #include "chessboard.h"
+#include "gamestate.h"
+using namespace std;
 
 ChessBoard::ChessBoard()
 {
-    //std::vector<char> initBoard[8] = {'r', 'k', 'b', 'q', 'k', 'b', 'k', 'r'};
     auto createFrontline = [&](Player owner)
     {
         vector<Piece*> row;
@@ -16,7 +17,6 @@ ChessBoard::ChessBoard()
         return row;
     };
 
-    // TODO leaving as pawns for now
     auto createBackline = [&](Player owner)
     {
         vector<Piece*> row;
@@ -25,8 +25,8 @@ ChessBoard::ChessBoard()
         row.push_back(new Knight(owner));
         row.push_back(new Bishop(owner));
 
-        row.push_back(new Pawn(owner));
-        row.push_back(new Pawn(owner));
+        row.push_back(new King(owner));
+        row.push_back(new Queen(owner));
 
         row.push_back(new Bishop(owner));
         row.push_back(new Knight(owner));
@@ -35,7 +35,7 @@ ChessBoard::ChessBoard()
         return row;
     };
 
-    // create player 1's pieces
+    // create black pieces
     board.push_back(createBackline(Player::BLACK));
     board.push_back(createFrontline(Player::BLACK));
 
@@ -43,7 +43,7 @@ ChessBoard::ChessBoard()
     for(int i = 0; i < 4; i++)
         board.push_back(emptyRow);
 
-    // create player 2's pieces
+    // create white pieces
     board.push_back(createFrontline(Player::WHITE));
     board.push_back(createBackline(Player::WHITE));
 }
@@ -60,40 +60,6 @@ ChessBoard* ChessBoard::getInstance()
     return onlyInstance;
 }
 
-//void ChessBoard::displayBoard() const
-//{
-//    for(int r = 0; r < 8; r++){
-//        for(int c = 0; c < 8; c++){
-//            std::cout << this->getInstance()->displayPiece(Coordinate(r, c));
-//        }
-//        std::cout << "\n";
-//    }
-//}
-
-// Returns the chessboard as a vector of chars
-//std::vector<std::vector<std::string>> ChessBoard::getBoardAsVector() const
-//{
-//    vector<std::vector<std::string>> ret;
-//    vector<std::string> emptyRow;
-//    for(int r = 0; r  < MAX_HEIGHT; r++)
-//    {
-//        ret.push_back(emptyRow);
-//        for(int c = 0; c  < MAX_WIDTH; c++)
-//        {
-//            ret[r].push_back(getInstance()->displayPiece(Coordinate(r, c)));
-//        }
-//    }
-//
-//    for(int r = 0; r < 8; r++){
-//        for(int c = 0; c < 8; c++){
-//            std::cout << ret[r][c];
-//        }
-//        std::cout << "\n";
-//    }
-//
-//    return ret;
-//}
-
 Piece* ChessBoard::getPiece(int x, int y)
 {
     return board[x][y];
@@ -103,23 +69,28 @@ Piece* ChessBoard::getPiece(int x, int y)
 // TODO: consider moving into the controller into a ValidChessMove Class
 bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
 {
-    std::cout << "in movePiece\n";
     // TODO: king cant move into danger
     if(!src.isValid() || !dest.isValid())
         return false;
 
     Piece* srcPiece = board[src.getX()][src.getY()];
+    auto gameState = GameState::getInstance();
 
     /*
      * If no piece exits at src or
-     * if a piece exists at dest belongs to the same player, return false.
+     * if its not the given players turn, return false.
      */
-    if(srcPiece ==  nullptr || (board[dest.getX()][dest.getY()] != nullptr &&
-                                board[dest.getX()][dest.getY()]->getPlayer() == p))
+    if(srcPiece ==  nullptr || srcPiece->getPlayer() != gameState->currentPlayersTurn())
     {
         // No piece exits at src, return false
         std::cout << "piece is null \n";
         return false;
+    }
+
+    if(!srcPiece->canBeCaptured())
+    {
+        if(srcPiece->inDanger(dest))
+            return false;
     }
 
     bool validMove = srcPiece->validMove(src, dest);
@@ -132,31 +103,24 @@ bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
         // Check if its possible for srcPiece to capture destPiece
         if(destPiece && srcPlayer != destPiece->getPlayer())
         {
+            if(!destPiece->canBeCaptured())
+                return false;
+
             std::cout << "destPiece: " << destPiece << endl;
             Player destPlayer = destPiece->getPlayer();
-            // Capture destPiece
-            switch(destPlayer)
-            {
-                //case Player::BLACK:
-                //    capturedBlackPieces.push_back(destPiece);
-                //    break;
 
-                //case Player::WHITE:
-                //    capturedWhitePieces.push_back(destPiece);
-                //    break;
-                //default:
-                //    std::cout << "unable to determine player \n";
-                //    return false;
-
-                delete destPiece;
-            }
+            // TODO: store captured pieces
+            delete destPiece;
         }
+        else if(destPiece && srcPlayer == destPiece->getPlayer())
+            return false;
 
         // Move Piece from src -> dest
         std::cout << "moving piece \n";
         board[dest.getX()][dest.getY()] = srcPiece;
         board[src.getX()][src.getY()] = nullptr;
 
+        gameState->endTurn();
     }
 
     std::cout << "end of movePiece \n";

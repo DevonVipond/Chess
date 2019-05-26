@@ -12,11 +12,13 @@ static const QString BLACK_PAWN =  IMAGE_DIRECTORY_PATH + "pawn.png";
 static const QString BLACK_KNIGHT =IMAGE_DIRECTORY_PATH + "horse.png";
 static const QString BLACK_ROOK =  IMAGE_DIRECTORY_PATH + "rook.png";
 static const QString BLACK_KING =  IMAGE_DIRECTORY_PATH + "king.png";
+static const QString BLACK_BISHOP =  IMAGE_DIRECTORY_PATH + "bishop.png";
 static const QString BLACK_QUEEN = IMAGE_DIRECTORY_PATH + "queen.png";
 
 // White Chess Piece Images:
 static const QString WHITE_PAWN =  IMAGE_DIRECTORY_PATH + "pawn_white.png";
 static const QString WHITE_KNIGHT =IMAGE_DIRECTORY_PATH + "horse_white.png";
+static const QString WHITE_BISHOP =IMAGE_DIRECTORY_PATH + "bishop_white.png";
 static const QString WHITE_ROOK =  IMAGE_DIRECTORY_PATH + "rook_white.png";
 static const QString WHITE_KING =  IMAGE_DIRECTORY_PATH + "king_white.png";
 static const QString WHITE_QUEEN = IMAGE_DIRECTORY_PATH + "queen_white.png";

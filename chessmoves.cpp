@@ -82,3 +82,29 @@ bool Diagonal::validMove(Coordinate src, Coordinate dest, int maxX=8, int maxY=8
 
     return false;
 }
+
+AllDirections::AllDirections()
+{
+    horizontalVertical = new HorizontalVertical();
+    diagonal = new Diagonal();
+}
+
+/*
+ * Checks if the move is either a valid Horizontal/Vertical or a valid Diagonal move.
+ * Returns true if either move is possible, otherwise returns false
+*/
+bool AllDirections::validMove(Coordinate src, Coordinate dest, int maxX=8, int maxY=8)
+{
+    if(horizontalVertical->validMove(src, dest, maxX, maxY))
+    {
+        return true;
+    }
+
+    if(diagonal->validMove(src, dest, maxX, maxY))
+    {
+        return true;
+    }
+
+    return false;
+}
+

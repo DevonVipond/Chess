@@ -18,7 +18,7 @@ public:
 
 /*
  * Used to describe the movement for pieces that can either move
- * horizontally or vertically such as Rooks, Pawns, Queen, King
+ * horizontally or vertically such as Rooks, Pawns
 */
 class HorizontalVertical : public ChessMove
 {
@@ -42,7 +42,7 @@ public:
 };
 
 /*
- * Movement for Bishop, Queen and King
+ * Movement for Bishop
 */
 class Diagonal : public ChessMove
 {
@@ -51,6 +51,22 @@ public:
     ~Diagonal(){}
 
     bool validMove(Coordinate src, Coordinate dest, int maxX, int maxY) override;
+};
+
+/*
+ * Movement for King and Queen
+*/
+class AllDirections : public ChessMove
+{
+public:
+    AllDirections();
+    ~AllDirections(){}
+
+    bool validMove(Coordinate src, Coordinate dest, int maxX, int maxY) override;
+
+private:
+    ChessMove* horizontalVertical;
+    ChessMove* diagonal;
 };
 
 #endif // CHESSMOVES_H

@@ -9,9 +9,6 @@
 #include "chessboard.h"
 #include "translations.h"
 
-
-//inline void log(std::string s){ std::cout << s << std::endl;}
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -64,7 +61,6 @@ bool MainWindow::drawBoard(bool update)
         }
         else
         {
-            std::cout << "updating boad\n";
             collection[r][c]->update(imagePath, player==Player::UNKNOWN?false:true, player);
         }
     };
