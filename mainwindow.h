@@ -31,6 +31,8 @@ signals:
 public slots:
     bool drawBoard(bool update=true);
 private:
+    void announceWinner(Player winner);
+
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
 

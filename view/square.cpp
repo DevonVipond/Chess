@@ -1,5 +1,6 @@
 #include "square.h"
 #include "chessboard.h"
+#include "gamestate.h"
 
 #include "iostream"
 #include <unordered_map>
@@ -19,6 +20,11 @@ Square::~Square()
 bool Square::event(QEvent *event)
 {
     static int counter=0;
+    auto gameState = GameState::getInstance();
+
+    if(gameState->isGameOver())
+        return false;
+
     if (event->type() == QEvent::MouseButtonPress)
     {
         auto board = ChessBoard::getInstance();
@@ -43,7 +49,7 @@ bool Square::event(QEvent *event)
                 }
                 else
                 {
-                    std::cout << "ERR: unable to move piece\n";
+                    std::cout << "ERROR: Unable to move piece! \n";
 
                     // TODO: IDK what to do here
                     // Prob make tile red
@@ -108,13 +114,4 @@ void Square::setImage(QString imagePath)
         this->setPixmap(QPixmap());
 
     this->setPixmap(QPixmap(imageTranslation));
-    //QPixmap pixmap;
-    //if(pixmap.load(IMAGE_DIRECTORY_PATH + imagePath))
-    //{
-    //    //this->setPixmap(QPixmap(IMAGE_DIRECTORY_PATH + imagePath));
-    //}
-    //else
-    //{
-    //    std::cout << "No image found\n";
-    //}
 }

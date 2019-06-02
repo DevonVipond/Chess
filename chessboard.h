@@ -1,6 +1,7 @@
 #include<string>
 #include <stdio.h>
 #include<vector>
+#include <unordered_map>
 
 #include "coordinate.h"
 #include "pawn.h"
@@ -29,6 +30,7 @@ public:
     // TODO : Destructor
     //~ChessBoard();
 
+    Piece* getPiece(Coordinate location);
     Piece* getPiece(int x, int y);
 
     // TODO move out
@@ -36,6 +38,12 @@ public:
     Coordinate getFirstSelectedPiece(){return firstSelectedPiece;}
 
     bool movePiece(Player p, Coordinate src, Coordinate dest);
+    /*
+     * Returns the player in checkmate, or returns UNKNOWN if no player
+     * is in checkmate
+    */
+    Player checkmate();
+    bool inDanger(Coordinate location, Player player=Player::UNKNOWN);
 
 private:
     ChessBoard();

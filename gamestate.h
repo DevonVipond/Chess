@@ -9,9 +9,10 @@ public:
     static GameState* getInstance();
     Player currentPlayersTurn(){return whichPlayersTurn;}
     void endTurn();
+    void endGame(Player winner);
+    Player getWinner();
+    bool isGameOver();
 
-    // TODO:
-    //bool inCheckmate();
 private:
     GameState();
     GameState(const GameState& rhs) = delete;
@@ -19,6 +20,8 @@ private:
     static GameState* onlyInstance;
 
     Player whichPlayersTurn;
+    bool gameOver;
+    Player winningPlayer=Player::UNKNOWN;
     //std::vector<Piece*> capturedBlackPieces;
     //std::vector<Piece*> capturedWhitePieces;
 };

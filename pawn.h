@@ -12,7 +12,11 @@ public:
     ~Pawn() override {}
 
     bool validMove(Coordinate src, Coordinate dest) override;
+    bool validCapture(Coordinate src, Coordinate dest);
     std::string getName() override{return player == Player::WHITE ? "WHITE_PAWN" : "BLACK_PAWN";}
+
+private:
+    ChessMove* moveAndCapture;
 };
 
 #endif // PAWN_H

@@ -20,14 +20,13 @@ public:
     virtual  ~Piece(){}
 
     virtual bool validMove(Coordinate src, Coordinate dest) = 0;
+    virtual bool validCapture(Coordinate src, Coordinate dest){return validMove(src, dest);}
     Player getPlayer();
     virtual std::string getName() = 0;
 
     /*
      * inDanger, inCheck and canBeCaptured are used for special handling of the King
     */
-    bool inDanger(Coordinate location);
-    bool inCheck(Coordinate location);
     bool canBeCaptured();
 
 protected:
@@ -38,7 +37,7 @@ protected:
     int y;
 
     // Ensures that a chess move requested by the player is valid
-    // Uses the strategy design pattern
+    // Assigned to a derived class using the strategy design pattern
     ChessMove* move;
 };
 

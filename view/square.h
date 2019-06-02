@@ -1,17 +1,11 @@
-#include "coordinate.h"
-
 #ifndef CHESSBOX_H
 #define CHESSBOX_H
 
-//#include <QGraphicsRectItem>
-//#include <QBrush>
 #include <QGraphicsSceneMouseEvent>
 #include <QLabel>
 #include <QString>
-//#include <QPushButton>
 
 #include "piece.h"
-#include "coordinate.h"
 
 static Coordinate firstSelectedSquare();
 

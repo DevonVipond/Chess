@@ -7,8 +7,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "chessboard.h"
+#include "gamestate.h"
 #include "translations.h"
 
+// TODO rename to chessview
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -20,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     window->show();
     window->focusWidget();
 
+
     drawBoard(false);
 }
 
@@ -28,7 +31,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// TODO: refactor
 bool MainWindow::drawBoard(bool update)
 {
     static int log = 0;
@@ -71,10 +73,11 @@ bool MainWindow::drawBoard(bool update)
         {
 
             // Check if a piece exists at this location
-            if(chessBoard->getPiece(r,c) != nullptr)
+            Coordinate src(r,c);
+            if(chessBoard->getPiece(src) != nullptr)
             {
-                std::string name = chessBoard->getPiece(r,c)->getName();
-                Player player = chessBoard->getPiece(r,c)->getPlayer();
+                std::string name = chessBoard->getPiece(src)->getName();
+                Player player = chessBoard->getPiece(src)->getPlayer();
 
                 createSquare(update, QString::fromStdString(name), player, r, c);
             }
@@ -83,12 +86,28 @@ bool MainWindow::drawBoard(bool update)
                 createSquare(update, QString(NO_PIECE_ICON), Player::UNKNOWN, r, c);
             }
 
-            // TODO: fix hella memory leak
             whiteTile = !whiteTile;
         }
 
         whiteTile = !whiteTile;
     }
 
+    auto gameState = GameState::getInstance();
+    if(gameState->getWinner() != Player::UNKNOWN)
+    {
+       this->announceWinner(gameState->getWinner());
+    }
+
     return true;
+}
+
+void MainWindow::announceWinner(Player winner)
+{
+    QLabel *winnerDialog = new QLabel(window);
+    winnerDialog->setGeometry(300,300,600,500);
+    winnerDialog->show();
+    winnerDialog->focusWidget();
+
+    QString winnerStr = winner == Player::WHITE ? "WHITE" : "BLACK";
+    winnerDialog->setText(winnerStr);
 }
