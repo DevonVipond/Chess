@@ -1,4 +1,3 @@
+![image](https://github.com/DevonVipond/Chess/blob/master/images/Screenshot.JPG)
 
-https://i.imgur.com/MkoLPtg.png
-images/ScreenShot.jpg
-![](images/ScreenShot.jpg?raw=true)
+
