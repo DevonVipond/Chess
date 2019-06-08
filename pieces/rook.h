@@ -1,4 +1,4 @@
-#include "piece.h"
+#include "pieces/piece.h"
 
 #ifndef ROOK_H
 #define ROOK_H

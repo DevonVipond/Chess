@@ -4,10 +4,10 @@
 #include <QString>
 #include <iostream>
 
-#include "mainwindow.h"
+#include "view/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "chessboard.h"
-#include "gamestate.h"
+#include "models/chessboard.h"
+#include "models/gamestate.h"
 #include "translations.h"
 
 // TODO rename to chessview

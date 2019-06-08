@@ -4,12 +4,12 @@
 #include <unordered_map>
 
 #include "coordinate.h"
-#include "pawn.h"
-#include "knight.h"
-#include "rook.h"
-#include "bishop.h"
-#include "king.h"
-#include "queen.h"
+#include "pieces/pawn.h"
+#include "pieces/knight.h"
+#include "pieces/rook.h"
+#include "pieces/bishop.h"
+#include "pieces/king.h"
+#include "pieces/queen.h"
 
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H

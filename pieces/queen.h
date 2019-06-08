@@ -1,4 +1,4 @@
-#include "piece.h"
+#include "pieces/piece.h"
 
 #ifndef QUEEN_H
 #define QUEEN_H

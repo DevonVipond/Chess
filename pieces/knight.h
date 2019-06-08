@@ -1,4 +1,4 @@
-#include "piece.h"
+#include "pieces/piece.h"
 
 #ifndef KNIGHT_H
 #define KNIGHT_H

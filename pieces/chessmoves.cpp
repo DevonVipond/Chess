@@ -1,8 +1,8 @@
 #include <math.h>
 #include <iostream>
 
-#include "chessmoves.h"
-#include "chessboard.h"
+#include "pieces/chessmoves.h"
+#include "models/chessboard.h"
 
 bool HorizontalVertical::validMove(Coordinate src, Coordinate dest, int maxX=1, int maxY=1)
 {

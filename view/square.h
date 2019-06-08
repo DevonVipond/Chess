@@ -5,7 +5,7 @@
 #include <QLabel>
 #include <QString>
 
-#include "piece.h"
+#include "pieces/piece.h"
 
 static Coordinate firstSelectedSquare();
 

@@ -1,4 +1,4 @@
-#include "piece.h"
+#include "pieces/piece.h"
 
 #ifndef PAWN_H
 #define PAWN_H

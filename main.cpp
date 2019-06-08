@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "view/mainwindow.h"
 #include <QApplication>
 #include <string>
 #include <vector>
@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "chessboard.h"
+#include "models/chessboard.h"
 
 MainWindow *view;
 

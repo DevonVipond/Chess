@@ -1,9 +1,9 @@
-#include "square.h"
-#include "chessboard.h"
-#include "gamestate.h"
-
-#include "iostream"
+#include <iostream>
 #include <unordered_map>
+
+#include "square.h"
+#include "models/chessboard.h"
+#include "models/gamestate.h"
 
 Square::Square(QWidget *parent, QString imagePath, bool hasPiece, Player player, Coordinate coordinate) : QLabel (parent)
 {

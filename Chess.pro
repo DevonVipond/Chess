@@ -26,44 +26,42 @@ CONFIG += c++11
 CONFIG += console
 
 SOURCES += \
-    view/mainwindow.cpp \
-    model/chessboard.cpp \
+    models/chessboard.cpp \
     pieces/piece.cpp \
     pieces/pawn.cpp \
     coordinate.cpp \
     pieces/chessmoves.cpp \
     pieces/knight.cpp \
     pieces/rook.cpp \
-    /bishop.cpp \
+    pieces/bishop.cpp \
     view/square.cpp \
-    view/chessview.cpp \
     pieces/movevalidator.cpp \
-    model/gamestate.cpp \
+    models/gamestate.cpp \
     main.cpp \
     pieces/king.cpp \
-    pieces/queen.cpp
+    pieces/queen.cpp \
+    view/mainwindow.cpp
 
 HEADERS += \
-    view/mainwindow.h \
-    model/chessboard.h \
-    model/chessgame.h \
-    piece.h \
-    pawn.h \
-    chessmoves.h \
-    knight.h \
+    models/chessboard.h \
+    #models/chessgame.h \
+    pieces/piece.h \
+    pieces/pawn.h \
+    pieces/chessmoves.h \
+    pieces/knight.h \
     view/square.h \
-    view/chessview.h \
-    bishop.h \
+    pieces/bishop.h \
     coordinate.h \
     view/rook.h \
     translations.h \
-    movevalidator.h \
-    gamestate.h \
-    king.h \
-    queen.h
+    pieces/movevalidator.h \
+    models/gamestate.h \
+    view/king.h \
+    view/queen.h \
+    view/mainwindow.h
 
 FORMS += \
-        mainwindow.ui
+        view/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

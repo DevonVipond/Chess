@@ -1,4 +1,4 @@
-#include "chessmoves.h"
+#include "pieces/chessmoves.h"
 
 #ifndef PIECEH_H
 #define PIECEH_H

@@ -1,6 +1,6 @@
-#include "queen.h"
-#include "king.h"
-#include "chessboard.h"
+#include "pieces/queen.h"
+#include "pieces/king.h"
+#include "models/chessboard.h"
 
 Queen::Queen(Player p) : Piece()
 {
@@ -13,5 +13,5 @@ Queen::Queen(Player p) : Piece()
 
 bool Queen::validMove(Coordinate src, Coordinate dest)
 {
-    return move->validMove(src, dest, 1, 1);
+    return move->validMove(src, dest, 8, 8);
 }

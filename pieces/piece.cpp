@@ -1,5 +1,5 @@
-#include "piece.h"
-#include "chessboard.h"
+#include "pieces/piece.h"
+#include "models/chessboard.h"
 #include "coordinate.h"
 
 bool Piece::canBeCaptured()
