@@ -26,27 +26,27 @@ CONFIG += c++11
 CONFIG += console
 
 SOURCES += \
-    mainwindow.cpp \
-    chessboard.cpp \
-    piece.cpp \
-    pawn.cpp \
+    view/mainwindow.cpp \
+    model/chessboard.cpp \
+    pieces/piece.cpp \
+    pieces/pawn.cpp \
     coordinate.cpp \
-    chessmoves.cpp \
-    knight.cpp \
-    rook.cpp \
-    bishop.cpp \
+    pieces/chessmoves.cpp \
+    pieces/knight.cpp \
+    pieces/rook.cpp \
+    /bishop.cpp \
     view/square.cpp \
     view/chessview.cpp \
-    movevalidator.cpp \
-    gamestate.cpp \
+    pieces/movevalidator.cpp \
+    model/gamestate.cpp \
     main.cpp \
-    king.cpp \
-    queen.cpp
+    pieces/king.cpp \
+    pieces/queen.cpp
 
 HEADERS += \
-    mainwindow.h \
-    chessboard.h \
-    chessgame.h \
+    view/mainwindow.h \
+    model/chessboard.h \
+    model/chessgame.h \
     piece.h \
     pawn.h \
     chessmoves.h \
@@ -55,7 +55,7 @@ HEADERS += \
     view/chessview.h \
     bishop.h \
     coordinate.h \
-    rook.h \
+    view/rook.h \
     translations.h \
     movevalidator.h \
     gamestate.h \
