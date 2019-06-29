@@ -8,9 +8,20 @@
 #include <QtCore>
 #include <QtGui>
 #include <QWidget>
+#include <QPushButton>
 
 #include "view/square.h"
 #include "coordinate.h"
+
+class Button : public QPushButton
+{
+    Q_OBJECT
+signals:
+    void updateDisplay(bool update);
+public:
+    Button(QWidget *parent=nullptr):QPushButton(parent) {}
+    bool event(QEvent *e);
+};
 
 namespace Ui {
 class MainWindow;
@@ -25,9 +36,10 @@ public:
     ~MainWindow();
 
     QWidget *window;
+    Button *undoMove;
 
 signals:
-    void updateDisplay();
+    void updateDisplay(bool update=true);
 public slots:
     bool drawBoard(bool update=true);
 private:

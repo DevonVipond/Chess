@@ -40,7 +40,8 @@ SOURCES += \
     main.cpp \
     pieces/king.cpp \
     pieces/queen.cpp \
-    view/mainwindow.cpp
+    view/mainwindow.cpp \
+    ai/aimovedeterminator.cpp
 
 HEADERS += \
     models/chessboard.h \
@@ -58,7 +59,8 @@ HEADERS += \
     models/gamestate.h \
     view/king.h \
     view/queen.h \
-    view/mainwindow.h
+    view/mainwindow.h \
+    ai/aimovedeterminator.h
 
 FORMS += \
         view/mainwindow.ui

@@ -22,6 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
     window->show();
     window->focusWidget();
 
+    undoMove = new Button(window);
+    undoMove->setText("UNDO");
+    undoMove->show();
+    undoMove->raise();
+    connect(undoMove, SIGNAL(updateDisplay(bool)), this, SLOT(drawBoard(bool)));
 
     drawBoard(false);
 }
@@ -59,7 +64,7 @@ bool MainWindow::drawBoard(bool update)
             else
                 square->setStyleSheet(BLACK_SQUARE_STYLE);
 
-            connect(square, SIGNAL(updateDisplay()), this, SLOT(drawBoard()));
+            connect(square, SIGNAL(updateDisplay(bool)), this, SLOT(drawBoard(bool)));
         }
         else
         {
@@ -110,4 +115,14 @@ void MainWindow::announceWinner(Player winner)
 
     QString winnerStr = winner == Player::WHITE ? "WHITE" : "BLACK";
     winnerDialog->setText(winnerStr);
+}
+
+bool Button::event(QEvent *event)
+{
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        auto board = ChessBoard::getInstance();
+        board->undoMove();
+        emit updateDisplay(false);
+    }
 }

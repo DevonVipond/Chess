@@ -11,7 +11,7 @@ class ChessMove
 {
 public:
     ChessMove(){}
-    ~ChessMove(){}
+    virtual ~ChessMove(){}
 
     virtual bool validMove(Coordinate src, Coordinate dest, int maxX, int maxY) = 0;
 };

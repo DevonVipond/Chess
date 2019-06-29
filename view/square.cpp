@@ -4,6 +4,7 @@
 #include "square.h"
 #include "models/chessboard.h"
 #include "models/gamestate.h"
+#include "ai/aimovedeterminator.h"
 
 Square::Square(QWidget *parent, QString imagePath, bool hasPiece, Player player, Coordinate coordinate) : QLabel (parent)
 {
@@ -45,7 +46,10 @@ bool Square::event(QEvent *event)
                     firstSelectedSquare.clear();
                     board->setFirstSelectedPiece(firstSelectedSquare);
 
-                    emit updateDisplay();
+                    //AIMoveDeterminator ai;
+                    ////Player oppositePlayer = (player == Player::WHITE ? Player::BLACK : Player::WHITE);
+                    //ai.minimaxRoot(Player::BLACK);
+                    emit updateDisplay(true);
                 }
                 else
                 {

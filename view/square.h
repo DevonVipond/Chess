@@ -13,7 +13,7 @@ class Square : public QLabel
 {
     Q_OBJECT
 signals:
-    void updateDisplay();
+    void updateDisplay(bool update);
 public:
      Square(QWidget *parent=nullptr):QLabel(parent) {}
      Square(QWidget *parent=nullptr, QString imagePath="", bool hasPiece=false,

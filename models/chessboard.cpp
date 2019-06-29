@@ -4,6 +4,7 @@
 
 #include "chessboard.h"
 #include "gamestate.h"
+
 using namespace std;
 
 ChessBoard::ChessBoard()
@@ -46,9 +47,6 @@ ChessBoard::ChessBoard()
     // create white pieces
     board.push_back(createFrontline(Player::WHITE));
     board.push_back(createBackline(Player::WHITE));
-
-
-
 }
 
 ChessBoard* ChessBoard::onlyInstance;
@@ -81,7 +79,7 @@ Piece* ChessBoard::getPiece(int x, int y)
 }
 
 #include <iostream>
-bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
+bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest, bool simulatingMove)
 {
     if(!src.isValid() || !dest.isValid())
         return false;
@@ -93,10 +91,11 @@ bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
      * If no piece exits at src or
      * if its not the given players turn, return false.
      */
-    if(srcPiece ==  nullptr || srcPiece->getPlayer() != gameState->currentPlayersTurn())
+    if(srcPiece ==  nullptr || (srcPiece->getPlayer() != gameState->currentPlayersTurn()
+            && !simulatingMove))
     {
         // No piece exits at src, return false
-        std::cout << "piece is null \n";
+        std::cout << "Error: piece is either null or not this player's turn\n";
         return false;
     }
 
@@ -123,37 +122,62 @@ bool ChessBoard::movePiece(Player p, Coordinate src, Coordinate dest)
 
             std::cout << "destPiece: " << destPiece << endl;
             Player destPlayer = destPiece->getPlayer();
-
-            delete destPiece;
         }
         else if(destPiece && srcPlayer == destPiece->getPlayer())
             return false;
 
+        previousMove prevMove(src, dest, destPiece);
+        previousMoves.push(prevMove);
+
         // Move Piece from src -> dest
-        std::cout << "moving piece \n";
         board[dest.getX()][dest.getY()] = srcPiece;
         board[src.getX()][src.getY()] = nullptr;
 
+        // TODO: uncomment
         gameState->endTurn();
     }
-    else if(srcPiece->validCapture(src, dest))
-    {}
 
-    Player potentialCheck = checkmate();
-    if(potentialCheck != Player::UNKNOWN)
+    if(!simulatingMove)
     {
-        // Announce the winner and end the game
-        std::cout << "ending game \n";
-        gameState->endGame(potentialCheck);
+        Player potentialCheck = checkmate();
+        if(potentialCheck != Player::UNKNOWN)
+        {
+            // Announce the winner and end the game
+            gameState->endGame(potentialCheck);
+        }
     }
 
     return validMove || validCapture;
+}
+
+void ChessBoard::undoMove()
+{
+    if(previousMoves.empty())
+        return;
+
+    previousMove prev = previousMoves.top();
+    previousMoves.pop();
+
+    Piece* destPiece =  board[prev.src.getX()][prev.src.getY()];
+    board[prev.src.getX()][prev.src.getY()] =  board[prev.dest.getX()][prev.dest.getY()];
+    board[prev.dest.getX()][prev.dest.getY()] =  board[prev.src.getX()][prev.src.getY()];
+}
+
+bool ChessBoard::undoAndRestorePiece()
+{
+    undoMove();
+
+    if(!previousMoves.empty() && previousMoves.top().capturedPiece != nullptr)
+        return true;
+
+    return false;
 }
 
 /*
  * Returns true if an enemy piece is within capturing range of the parameter location.
  * Otherwise returns false.
 */
+// TODO: bug - if testing move for a piece, the piece can obstruct enemy pieces
 bool ChessBoard::inDanger(Coordinate location, Player player)
 {
     auto board = ChessBoard::getInstance();
@@ -164,14 +188,13 @@ bool ChessBoard::inDanger(Coordinate location, Player player)
         for(int c = 0; c < MAX_HEIGHT; c++)
         {
             Coordinate src(r,c);
-
             Piece *piece = board->getPiece(src);
 
             // Check if a piece exits at (r,c) and if its an enemy piece.
             if(piece != nullptr && piece->getPlayer() != player)
             {
                 // If an enemy piece can capture the piece at location, return false.
-                if(piece->validMove(src, location))
+                if(piece->validMove(src, location)) // TODO: special handling for pawns
                 {
                     std::cout << "returning true from inDanger \n";
                     return true;
@@ -209,10 +232,11 @@ Player ChessBoard::checkmate()
                 {
                     Coordinate adjacentSquare(r + adj[0], c + adj[1]);
                     Piece *adjacentPiece = this->getPiece(adjacentSquare);
-                    if(!inDanger(adjacentSquare, piece->getPlayer()) && (adjacentPiece == nullptr || adjacentPiece->getPlayer() != piece->getPlayer()))
+                    if(adjacentSquare.isValid() && !inDanger(adjacentSquare, piece->getPlayer()) && (adjacentPiece == nullptr || adjacentPiece->getPlayer() != piece->getPlayer())) // TODO: BUg: enemy king
                     {
+                        std::cout << "\nSetting inCheck to false\n" << std::endl;
+                        std::cout << (adjacentPiece == nullptr ? "\nadjacentPiece: null\n" : "\nadjacentPiece not null\n");
                         inCheck = false;
-                        break;
                     }
                 }
 
@@ -221,6 +245,10 @@ Player ChessBoard::checkmate()
                     std::cout << "in Check\n";
                     // TODO: Check if friendly piece can obstruct the check
                     return piece->getPlayer();
+                }
+                else
+                {
+                    std::cout << "not in check\n";
                 }
             }
         }
